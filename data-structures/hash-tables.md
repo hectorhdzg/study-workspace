@@ -80,6 +80,34 @@ function twoSum(nums, target) {
 console.log(twoSum([2, 7, 11, 15], 9)); // [0, 1]
 ```
 
+```python
+def two_sum(nums, target):
+    seen = {}
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+    return []
+
+print(two_sum([2, 7, 11, 15], 9))  # [0, 1]
+```
+
+```csharp
+public int[] TwoSum(int[] nums, int target)
+{
+    var map = new Dictionary<int, int>();
+    for (int i = 0; i < nums.Length; i++)
+    {
+        int complement = target - nums[i];
+        if (map.ContainsKey(complement))
+            return new[] { map[complement], i };
+        map[nums[i]] = i;
+    }
+    return Array.Empty<int>();
+}
+```
+
 ### Group Anagrams
 
 ```javascript
@@ -97,6 +125,33 @@ function groupAnagrams(strs) {
 
 console.log(groupAnagrams(["eat","tea","tan","ate","nat","bat"]));
 // [["eat","tea","ate"],["tan","nat"],["bat"]]
+```
+
+```python
+from collections import defaultdict
+
+def group_anagrams(strs):
+    groups = defaultdict(list)
+    for s in strs:
+        key = ''.join(sorted(s))
+        groups[key].append(s)
+    return list(groups.values())
+
+print(group_anagrams(["eat","tea","tan","ate","nat","bat"]))
+```
+
+```csharp
+public IList<IList<string>> GroupAnagrams(string[] strs)
+{
+    var map = new Dictionary<string, IList<string>>();
+    foreach (var s in strs)
+    {
+        var key = new string(s.OrderBy(c => c).ToArray());
+        if (!map.ContainsKey(key)) map[key] = new List<string>();
+        map[key].Add(s);
+    }
+    return map.Values.ToList<IList<string>>();
+}
 ```
 
 ### LRU Cache

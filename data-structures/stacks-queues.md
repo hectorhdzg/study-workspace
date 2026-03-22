@@ -42,6 +42,39 @@ console.log(isValid("()[]{}")); // true
 console.log(isValid("(]"));    // false
 ```
 
+```python
+def is_valid(s: str) -> bool:
+    stack = []
+    pairs = {')': '(', ']': '[', '}': '{'}
+    for c in s:
+        if c in '([{':
+            stack.append(c)
+        elif not stack or stack.pop() != pairs[c]:
+            return False
+    return len(stack) == 0
+
+print(is_valid("()[]{}"))  # True
+print(is_valid("(]"))      # False
+```
+
+```csharp
+public bool IsValid(string s)
+{
+    var stack = new Stack<char>();
+    var pairs = new Dictionary<char, char>
+        { {')', '('}, {']', '['}, {'}', '{'} };
+
+    foreach (char c in s)
+    {
+        if ("([{".Contains(c))
+            stack.Push(c);
+        else if (stack.Count == 0 || stack.Pop() != pairs[c])
+            return false;
+    }
+    return stack.Count == 0;
+}
+```
+
 ### Monotonic Stack (Next Greater Element)
 
 ```javascript

@@ -42,6 +42,40 @@ console.log(fib(10));   // 55
 console.log(fibDP(10)); // 55
 ```
 
+```python
+from functools import lru_cache
+
+# Top-Down with decorator
+@lru_cache(maxsize=None)
+def fib(n):
+    if n <= 1: return n
+    return fib(n - 1) + fib(n - 2)
+
+# Bottom-Up
+def fib_dp(n):
+    if n <= 1: return n
+    dp = [0, 1]
+    for i in range(2, n + 1):
+        dp.append(dp[i - 1] + dp[i - 2])
+    return dp[n]
+
+print(fib(10))     # 55
+print(fib_dp(10))  # 55
+```
+
+```csharp
+// Bottom-Up
+public int Fib(int n)
+{
+    if (n <= 1) return n;
+    var dp = new int[n + 1];
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++)
+        dp[i] = dp[i - 1] + dp[i - 2];
+    return dp[n];
+}
+```
+
 ---
 
 ### 2. 0/1 Knapsack
@@ -97,6 +131,35 @@ function lcs(s1, s2) {
 console.log(lcs("abcde", "ace")); // 3 ("ace")
 ```
 
+```python
+def lcs(s1, s2):
+    m, n = len(s1), len(s2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    return dp[m][n]
+
+print(lcs("abcde", "ace"))  # 3
+```
+
+```csharp
+public int LongestCommonSubsequence(string s1, string s2)
+{
+    int m = s1.Length, n = s2.Length;
+    var dp = new int[m + 1, n + 1];
+    for (int i = 1; i <= m; i++)
+        for (int j = 1; j <= n; j++)
+            dp[i, j] = s1[i - 1] == s2[j - 1]
+                ? dp[i - 1, j - 1] + 1
+                : Math.Max(dp[i - 1, j], dp[i, j - 1]);
+    return dp[m, n];
+}
+```
+
 ---
 
 ### 4. Coin Change (Min Coins)
@@ -118,6 +181,35 @@ function coinChange(coins, amount) {
 }
 
 console.log(coinChange([1, 5, 6, 9], 11)); // 2 (5+6)
+```
+
+```python
+def coin_change(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if coin <= i:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1
+
+print(coin_change([1, 5, 6, 9], 11))  # 2
+```
+
+```csharp
+public int CoinChange(int[] coins, int amount)
+{
+    var dp = new int[amount + 1];
+    Array.Fill(dp, int.MaxValue);
+    dp[0] = 0;
+
+    for (int i = 1; i <= amount; i++)
+        foreach (int coin in coins)
+            if (coin <= i && dp[i - coin] != int.MaxValue)
+                dp[i] = Math.Min(dp[i], dp[i - coin] + 1);
+
+    return dp[amount] == int.MaxValue ? -1 : dp[amount];
+}
 ```
 
 ---

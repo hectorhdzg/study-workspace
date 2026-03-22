@@ -57,6 +57,48 @@ function singleNumber(nums) {
 console.log(singleNumber([4, 1, 2, 1, 2])); // 4
 ```
 
+```python
+def is_power_of_two(n):
+    return n > 0 and (n & (n - 1)) == 0
+
+def count_bits(n):
+    count = 0
+    while n:
+        n &= n - 1
+        count += 1
+    return count
+
+# Or simply: bin(n).count('1')
+
+def single_number(nums):
+    result = 0
+    for n in nums:
+        result ^= n
+    return result
+
+# Or: from functools import reduce; reduce(lambda a,b: a^b, nums)
+
+print(single_number([4, 1, 2, 1, 2]))  # 4
+```
+
+```csharp
+public bool IsPowerOfTwo(int n) => n > 0 && (n & (n - 1)) == 0;
+
+public int CountBits(int n)
+{
+    int count = 0;
+    while (n > 0) { n &= n - 1; count++; }
+    return count;
+}
+
+public int SingleNumber(int[] nums)
+{
+    int result = 0;
+    foreach (int n in nums) result ^= n;
+    return result;
+}
+```
+
 ---
 
 ## Practice Problems

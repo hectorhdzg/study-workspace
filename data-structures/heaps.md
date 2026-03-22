@@ -91,6 +91,41 @@ function kLargest(nums, k) {
 console.log(kLargest([3, 1, 5, 12, 2, 11], 3)); // [5, 12, 11] (order may vary)
 ```
 
+```python
+import heapq
+
+def k_largest(nums, k):
+    # heapq is a min-heap by default — nlargest handles it
+    return heapq.nlargest(k, nums)
+
+# Manual approach with a min-heap of size k
+def k_largest_manual(nums, k):
+    heap = []
+    for num in nums:
+        heapq.heappush(heap, num)
+        if len(heap) > k:
+            heapq.heappop(heap)
+    return heap
+
+print(k_largest([3, 1, 5, 12, 2, 11], 3))  # [12, 11, 5]
+```
+
+```csharp
+public int[] KLargest(int[] nums, int k)
+{
+    // .NET 6+ has PriorityQueue (min-heap)
+    var heap = new PriorityQueue<int, int>();
+    foreach (int num in nums)
+    {
+        heap.Enqueue(num, num);
+        if (heap.Count > k) heap.Dequeue();
+    }
+    var result = new int[k];
+    for (int i = 0; i < k; i++) result[i] = heap.Dequeue();
+    return result;
+}
+```
+
 ### Merge K Sorted Lists
 
 ```javascript

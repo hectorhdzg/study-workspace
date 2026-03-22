@@ -55,6 +55,34 @@ function maxSubarray(nums) {
 console.log(maxSubarray([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // 6
 ```
 
+```python
+def max_subarray(nums):
+    max_sum = current_sum = nums[0]
+
+    for num in nums[1:]:
+        current_sum = max(num, current_sum + num)
+        max_sum = max(max_sum, current_sum)
+
+    return max_sum
+
+print(max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))  # 6
+```
+
+```csharp
+public int MaxSubArray(int[] nums)
+{
+    int maxSum = nums[0], currentSum = nums[0];
+
+    for (int i = 1; i < nums.Length; i++)
+    {
+        currentSum = Math.Max(nums[i], currentSum + nums[i]);
+        maxSum = Math.Max(maxSum, currentSum);
+    }
+
+    return maxSum;
+}
+```
+
 ### String Reversal
 
 ```javascript
@@ -84,6 +112,28 @@ function isAnagram(s, t) {
     count[c]--;
   }
   return true;
+}
+```
+
+```python
+from collections import Counter
+
+def is_anagram(s: str, t: str) -> bool:
+    return Counter(s) == Counter(t)
+```
+
+```csharp
+public bool IsAnagram(string s, string t)
+{
+    if (s.Length != t.Length) return false;
+    var count = new int[26];
+    foreach (char c in s) count[c - 'a']++;
+    foreach (char c in t)
+    {
+        count[c - 'a']--;
+        if (count[c - 'a'] < 0) return false;
+    }
+    return true;
 }
 ```
 

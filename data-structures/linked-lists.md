@@ -73,6 +73,29 @@ function reverseList(head) {
 }
 ```
 
+```python
+def reverse_list(head):
+    prev, curr = None, head
+    while curr:
+        curr.next, prev, curr = prev, curr, curr.next
+    return prev
+```
+
+```csharp
+public ListNode ReverseList(ListNode head)
+{
+    ListNode prev = null, curr = head;
+    while (curr != null)
+    {
+        var next = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+```
+
 ### Detect Cycle (Floyd's Tortoise & Hare)
 
 ```javascript
@@ -86,6 +109,31 @@ function hasCycle(head) {
   }
 
   return false;
+}
+```
+
+```python
+def has_cycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow is fast:
+            return True
+    return False
+```
+
+```csharp
+public bool HasCycle(ListNode head)
+{
+    ListNode slow = head, fast = head;
+    while (fast?.next != null)
+    {
+        slow = slow.next;
+        fast = fast.next.next;
+        if (slow == fast) return true;
+    }
+    return false;
 }
 ```
 
@@ -124,6 +172,35 @@ function mergeTwoLists(l1, l2) {
 
   curr.next = l1 || l2;
   return dummy.next;
+}
+```
+
+```python
+def merge_two_lists(l1, l2):
+    dummy = curr = ListNode(0)
+    while l1 and l2:
+        if l1.val <= l2.val:
+            curr.next, l1 = l1, l1.next
+        else:
+            curr.next, l2 = l2, l2.next
+        curr = curr.next
+    curr.next = l1 or l2
+    return dummy.next
+```
+
+```csharp
+public ListNode MergeTwoLists(ListNode l1, ListNode l2)
+{
+    var dummy = new ListNode(0);
+    var curr = dummy;
+    while (l1 != null && l2 != null)
+    {
+        if (l1.val <= l2.val) { curr.next = l1; l1 = l1.next; }
+        else { curr.next = l2; l2 = l2.next; }
+        curr = curr.next;
+    }
+    curr.next = l1 ?? l2;
+    return dummy.next;
 }
 ```
 

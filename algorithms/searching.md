@@ -39,6 +39,42 @@ console.log(binarySearch(arr, 7));  // 3
 console.log(binarySearch(arr, 4));  // -1
 ```
 
+```python
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target: return mid
+        elif arr[mid] < target: left = mid + 1
+        else: right = mid - 1
+    return -1
+
+# Or use the built-in bisect module
+import bisect
+def binary_search_bisect(arr, target):
+    i = bisect.bisect_left(arr, target)
+    return i if i < len(arr) and arr[i] == target else -1
+
+print(binary_search([1, 3, 5, 7, 9, 11], 7))  # 3
+```
+
+```csharp
+public int BinarySearch(int[] arr, int target)
+{
+    int left = 0, right = arr.Length - 1;
+    while (left <= right)
+    {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+
+    // Or use built-in: Array.BinarySearch(arr, target);
+}
+```
+
 ### Binary Search Variants
 
 **Find first occurrence:**

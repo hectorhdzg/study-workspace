@@ -161,3 +161,142 @@ Replication factor = 2 → each key on 2 nodes for HA
 - [ ] Deep dive on critical components
 - [ ] Address bottlenecks (caching, sharding, replication)
 - [ ] Discuss trade-offs
+
+---
+
+## 7. Design an AI-Powered Customer Support Chatbot (RAG)
+
+### Requirements
+- Answer customer questions using company knowledge base (docs, FAQs, policies).
+- Fallback to human agent when the bot can't answer.
+- Support 10K concurrent users, < 3s response time.
+- Cite sources in responses. Don't hallucinate.
+
+### High-Level Architecture
+
+```
+[User] → [Web App / Chat Widget]
+              ↓
+         [API Gateway + Auth]
+              ↓
+         [Chat Service]
+              ↓
+    ┌─────────┴──────────┐
+    │   RAG Pipeline      │
+    │                     │
+    │ 1. Embed query      │ → [Embedding Model API]
+    │ 2. Search           │ → [Vector DB (Qdrant/Pinecone)]
+    │ 3. Re-rank          │ → [Cross-Encoder / Cohere Rerank]
+    │ 4. Generate answer  │ → [LLM API (GPT-4o / Claude)]
+    └─────────┬──────────┘
+              ↓
+         [Response + Citations]
+              ↓
+    ┌─────────┴──────────┐
+    │  Guardrails         │
+    │  - Content filter   │
+    │  - PII redaction    │
+    │  - Confidence check │
+    └─────────┬──────────┘
+              ↓
+         [User sees answer]
+              │
+         (low confidence?) → [Route to Human Agent via Queue]
+```
+
+### Data Ingestion Pipeline (Offline)
+
+```
+[Knowledge Sources]                  [Vector DB]
+  ├─ Help articles (CMS)                 ↑
+  ├─ FAQ pages                    [Embed chunks]
+  ├─ Policy PDFs                         ↑
+  └─ Product docs              [Chunk documents]
+        ↓                                ↑
+  [Document Loader]  →  [Chunker]  →  [Embedder]  →  [Index]
+
+Triggered by: webhook on CMS update, nightly cron, or manual
+```
+
+### Key Components
+
+**Chat Service**
+- Stateless API that orchestrates the RAG pipeline.
+- Stores conversation history in Redis (TTL 24h) for multi-turn context.
+- Passes last N messages as context to LLM.
+
+**Vector Database**
+- Stores document chunks with embeddings.
+- Metadata per chunk: `source_url`, `title`, `last_updated`, `category`.
+- Use metadata filters: e.g., only search "billing" category for billing questions.
+
+**LLM Integration**
+- System prompt instructs: "Answer ONLY from the provided context. If unsure, say you'll connect to a human agent."
+- Temperature = 0 for factual consistency.
+- Streaming response for real-time UX.
+
+**Guardrails**
+- Content Safety API to block harmful responses.
+- PII detection to redact before logging.
+- Confidence scoring: if the model says "I'm not sure" or no relevant chunks found → route to human.
+
+### APIs
+
+```
+POST /api/chat
+Body: { "session_id": "abc", "message": "How do I return an item?" }
+Response (streamed): {
+  "reply": "You can return items within 30 days of purchase...",
+  "sources": [
+    {"title": "Return Policy", "url": "https://help.example.com/returns"}
+  ],
+  "confidence": 0.92
+}
+
+POST /api/feedback
+Body: { "message_id": "xyz", "rating": "positive" }
+```
+
+### Database Schema
+
+```sql
+-- Conversations
+CREATE TABLE conversations (
+    id UUID PRIMARY KEY,
+    user_id UUID,
+    created_at TIMESTAMP,
+    status VARCHAR(20)  -- 'active', 'resolved', 'escalated'
+);
+
+-- Messages
+CREATE TABLE messages (
+    id UUID PRIMARY KEY,
+    conversation_id UUID REFERENCES conversations(id),
+    role VARCHAR(10),       -- 'user', 'assistant', 'agent'
+    content TEXT,
+    sources JSONB,          -- [{"title": "...", "url": "..."}]
+    confidence FLOAT,
+    created_at TIMESTAMP
+);
+```
+
+### Scale & Performance
+
+| Concern | Solution |
+|---------|----------|
+| LLM latency (1-5s) | Stream tokens to client, cache frequent queries |
+| Vector DB throughput | HNSW index, read replicas, pre-filter by metadata |
+| Embedding cost | Batch embed during ingestion, cache query embeddings |
+| Conversation state | Redis with TTL, not in the LLM context after 24h |
+| Concurrent users | Stateless chat service, horizontal scaling behind LB |
+| Knowledge freshness | Webhook-triggered re-indexing on content updates |
+
+### Trade-offs Discussion
+
+| Decision | Option A | Option B |
+|----------|----------|----------|
+| **LLM choice** | GPT-4o (smartest, $$$) | GPT-4o-mini (cheaper, faster, good enough for FAQ) |
+| **Self-host vs API** | Self-host open LLM (control, privacy) | API (easy, no GPU infra) |
+| **Chunking** | Small (200 tokens, precise) | Large (1000 tokens, more context) |
+| **When to escalate** | Low confidence → human | Always show bot answer, offer escalation |
+| **Hybrid search** | Vector only (simpler) | Vector + BM25 keyword (better recall) |

@@ -64,6 +64,41 @@ console.log(subsets([1, 2, 3]));
 // [[], [1], [1,2], [1,2,3], [1,3], [2], [2,3], [3]]
 ```
 
+```python
+def subsets(nums):
+    result = []
+    def backtrack(start, current):
+        result.append(current[:])
+        for i in range(start, len(nums)):
+            current.append(nums[i])
+            backtrack(i + 1, current)
+            current.pop()
+    backtrack(0, [])
+    return result
+
+print(subsets([1, 2, 3]))
+```
+
+```csharp
+public IList<IList<int>> Subsets(int[] nums)
+{
+    var result = new List<IList<int>>();
+    Backtrack(0, new List<int>());
+    return result;
+
+    void Backtrack(int start, List<int> current)
+    {
+        result.Add(new List<int>(current));
+        for (int i = start; i < nums.Length; i++)
+        {
+            current.Add(nums[i]);
+            Backtrack(i + 1, current);
+            current.RemoveAt(current.Count - 1);
+        }
+    }
+}
+```
+
 ---
 
 ## Permutations
@@ -94,6 +129,54 @@ function permutations(nums) {
 
 console.log(permutations([1, 2, 3]));
 // [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+```
+
+```python
+def permutations(nums):
+    result = []
+    def backtrack(current, used):
+        if len(current) == len(nums):
+            result.append(current[:])
+            return
+        for i in range(len(nums)):
+            if used[i]: continue
+            used[i] = True
+            current.append(nums[i])
+            backtrack(current, used)
+            current.pop()
+            used[i] = False
+    backtrack([], [False] * len(nums))
+    return result
+
+# Or simply: from itertools import permutations
+print(permutations([1, 2, 3]))
+```
+
+```csharp
+public IList<IList<int>> Permute(int[] nums)
+{
+    var result = new List<IList<int>>();
+    Backtrack(new List<int>(), new bool[nums.Length]);
+    return result;
+
+    void Backtrack(List<int> current, bool[] used)
+    {
+        if (current.Count == nums.Length)
+        {
+            result.Add(new List<int>(current));
+            return;
+        }
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (used[i]) continue;
+            used[i] = true;
+            current.Add(nums[i]);
+            Backtrack(current, used);
+            current.RemoveAt(current.Count - 1);
+            used[i] = false;
+        }
+    }
+}
 ```
 
 ---

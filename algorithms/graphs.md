@@ -73,6 +73,55 @@ function shortestPath(graph, start, end) {
 }
 ```
 
+```python
+from collections import deque
+
+def bfs(graph, start):
+    visited, queue, order = {start}, deque([start]), []
+    while queue:
+        node = queue.popleft()
+        order.append(node)
+        for neighbor in graph.get(node, []):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
+    return order
+
+def shortest_path(graph, start, end):
+    visited = {start}
+    queue = deque([(start, [start])])
+    while queue:
+        node, path = queue.popleft()
+        if node == end: return path
+        for neighbor in graph.get(node, []):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append((neighbor, path + [neighbor]))
+    return None
+```
+
+```csharp
+public List<string> Bfs(Dictionary<string, List<string>> graph, string start)
+{
+    var visited = new HashSet<string> { start };
+    var queue = new Queue<string>();
+    queue.Enqueue(start);
+    var order = new List<string>();
+
+    while (queue.Count > 0)
+    {
+        var node = queue.Dequeue();
+        order.Add(node);
+        foreach (var neighbor in graph.GetValueOrDefault(node, new()))
+        {
+            if (visited.Add(neighbor))
+                queue.Enqueue(neighbor);
+        }
+    }
+    return order;
+}
+```
+
 ---
 
 ## Depth-First Search (DFS)
@@ -109,6 +158,48 @@ function dfsRecursive(graph, node, visited = new Set()) {
     if (!visited.has(neighbor)) dfsRecursive(graph, neighbor, visited);
   }
   return visited;
+}
+```
+
+```python
+def dfs(graph, start):
+    visited, stack, order = set(), [start], []
+    while stack:
+        node = stack.pop()
+        if node in visited: continue
+        visited.add(node)
+        order.append(node)
+        for neighbor in graph.get(node, []):
+            if neighbor not in visited:
+                stack.append(neighbor)
+    return order
+
+def dfs_recursive(graph, node, visited=None):
+    if visited is None: visited = set()
+    visited.add(node)
+    for neighbor in graph.get(node, []):
+        if neighbor not in visited:
+            dfs_recursive(graph, neighbor, visited)
+    return visited
+```
+
+```csharp
+public List<string> Dfs(Dictionary<string, List<string>> graph, string start)
+{
+    var visited = new HashSet<string>();
+    var stack = new Stack<string>();
+    stack.Push(start);
+    var order = new List<string>();
+
+    while (stack.Count > 0)
+    {
+        var node = stack.Pop();
+        if (!visited.Add(node)) continue;
+        order.Add(node);
+        foreach (var neighbor in graph.GetValueOrDefault(node, new()))
+            if (!visited.Contains(neighbor)) stack.Push(neighbor);
+    }
+    return order;
 }
 ```
 
@@ -190,6 +281,58 @@ const weightedGraph = {
   D: []
 };
 console.log(dijkstra(weightedGraph, 'A')); // { A:0, B:1, C:3, D:4 }
+```
+
+```python
+import heapq
+
+def dijkstra(graph, start):
+    dist = {node: float('inf') for node in graph}
+    dist[start] = 0
+    pq = [(0, start)]  # (distance, node)
+
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d > dist[u]: continue
+        for v, weight in graph.get(u, []):
+            if dist[u] + weight < dist[v]:
+                dist[v] = dist[u] + weight
+                heapq.heappush(pq, (dist[v], v))
+    return dist
+
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('C', 2), ('D', 5)],
+    'C': [('D', 1)],
+    'D': []
+}
+print(dijkstra(graph, 'A'))  # {'A': 0, 'B': 1, 'C': 3, 'D': 4}
+```
+
+```csharp
+public Dictionary<string, int> Dijkstra(
+    Dictionary<string, List<(string node, int weight)>> graph, string start)
+{
+    var dist = graph.Keys.ToDictionary(k => k, _ => int.MaxValue);
+    dist[start] = 0;
+    var pq = new PriorityQueue<string, int>();
+    pq.Enqueue(start, 0);
+
+    while (pq.Count > 0)
+    {
+        var u = pq.Dequeue();
+        foreach (var (v, weight) in graph.GetValueOrDefault(u, new()))
+        {
+            int newDist = dist[u] + weight;
+            if (newDist < dist[v])
+            {
+                dist[v] = newDist;
+                pq.Enqueue(v, newDist);
+            }
+        }
+    }
+    return dist;
+}
 ```
 
 ---

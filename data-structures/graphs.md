@@ -82,6 +82,57 @@ function countComponents(n, edges) {
 }
 ```
 
+```python
+def count_components(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+
+    visited = set()
+    count = 0
+
+    def dfs(node):
+        visited.add(node)
+        for neighbor in adj[node]:
+            if neighbor not in visited:
+                dfs(neighbor)
+
+    for i in range(n):
+        if i not in visited:
+            dfs(i)
+            count += 1
+    return count
+```
+
+```csharp
+public int CountComponents(int n, int[][] edges)
+{
+    var adj = Enumerable.Range(0, n).Select(_ => new List<int>()).ToArray();
+    foreach (var e in edges)
+    {
+        adj[e[0]].Add(e[1]);
+        adj[e[1]].Add(e[0]);
+    }
+
+    var visited = new HashSet<int>();
+    int count = 0;
+
+    void Dfs(int node)
+    {
+        visited.Add(node);
+        foreach (int neighbor in adj[node])
+            if (!visited.Contains(neighbor)) Dfs(neighbor);
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        if (!visited.Contains(i)) { Dfs(i); count++; }
+    }
+    return count;
+}
+```
+
 ---
 
 ## Cycle Detection (Directed Graph)

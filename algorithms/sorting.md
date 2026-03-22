@@ -51,6 +51,49 @@ function merge(left, right) {
 console.log(mergeSort([5, 3, 8, 1, 2])); // [1, 2, 3, 5, 8]
 ```
 
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result, i, j = [], 0, 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i]); i += 1
+        else:
+            result.append(right[j]); j += 1
+    return result + left[i:] + right[j:]
+
+print(merge_sort([5, 3, 8, 1, 2]))  # [1, 2, 3, 5, 8]
+```
+
+```csharp
+public int[] MergeSort(int[] arr)
+{
+    if (arr.Length <= 1) return arr;
+    int mid = arr.Length / 2;
+    var left = MergeSort(arr[..mid]);
+    var right = MergeSort(arr[mid..]);
+    return Merge(left, right);
+}
+
+private int[] Merge(int[] left, int[] right)
+{
+    var result = new int[left.Length + right.Length];
+    int i = 0, j = 0, k = 0;
+    while (i < left.Length && j < right.Length)
+        result[k++] = left[i] <= right[j] ? left[i++] : right[j++];
+    while (i < left.Length) result[k++] = left[i++];
+    while (j < right.Length) result[k++] = right[j++];
+    return result;
+}
+```
+
 ---
 
 ## Quick Sort
@@ -86,6 +129,45 @@ function partition(arr, low, high) {
 
 // Example
 console.log(quickSort([5, 3, 8, 1, 2])); // [1, 2, 3, 5, 8]
+```
+
+```python
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[-1]
+    left = [x for x in arr[:-1] if x <= pivot]
+    right = [x for x in arr[:-1] if x > pivot]
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+print(quick_sort([5, 3, 8, 1, 2]))  # [1, 2, 3, 5, 8]
+```
+
+```csharp
+public void QuickSort(int[] arr, int low, int high)
+{
+    if (low < high)
+    {
+        int pivot = Partition(arr, low, high);
+        QuickSort(arr, low, pivot - 1);
+        QuickSort(arr, pivot + 1, high);
+    }
+}
+
+private int Partition(int[] arr, int low, int high)
+{
+    int pivot = arr[high], i = low - 1;
+    for (int j = low; j < high; j++)
+    {
+        if (arr[j] <= pivot)
+        {
+            i++;
+            (arr[i], arr[j]) = (arr[j], arr[i]);
+        }
+    }
+    (arr[i + 1], arr[high]) = (arr[high], arr[i + 1]);
+    return i + 1;
+}
 ```
 
 ---

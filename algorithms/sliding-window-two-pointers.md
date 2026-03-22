@@ -27,6 +27,34 @@ function twoSum(arr, target) {
 console.log(twoSum([1, 2, 3, 4, 6], 6)); // [1, 3]
 ```
 
+```python
+def two_sum_sorted(arr, target):
+    left, right = 0, len(arr) - 1
+    while left < right:
+        s = arr[left] + arr[right]
+        if s == target: return [left, right]
+        elif s < target: left += 1
+        else: right -= 1
+    return []
+
+print(two_sum_sorted([1, 2, 3, 4, 6], 6))  # [1, 3]
+```
+
+```csharp
+public int[] TwoSum(int[] arr, int target)
+{
+    int left = 0, right = arr.Length - 1;
+    while (left < right)
+    {
+        int sum = arr[left] + arr[right];
+        if (sum == target) return new[] { left, right };
+        if (sum < target) left++;
+        else right--;
+    }
+    return Array.Empty<int>();
+}
+```
+
 ### Remove Duplicates from Sorted Array
 
 ```javascript
@@ -123,6 +151,37 @@ function lengthOfLongestSubstring(s) {
 }
 
 console.log(lengthOfLongestSubstring("abcabcbb")); // 3
+```
+
+```python
+def length_of_longest_substring(s):
+    seen = {}
+    left = max_len = 0
+    for right, c in enumerate(s):
+        if c in seen:
+            left = max(left, seen[c] + 1)
+        seen[c] = right
+        max_len = max(max_len, right - left + 1)
+    return max_len
+
+print(length_of_longest_substring("abcabcbb"))  # 3
+```
+
+```csharp
+public int LengthOfLongestSubstring(string s)
+{
+    var map = new Dictionary<char, int>();
+    int left = 0, maxLen = 0;
+
+    for (int right = 0; right < s.Length; right++)
+    {
+        if (map.ContainsKey(s[right]))
+            left = Math.Max(left, map[s[right]] + 1);
+        map[s[right]] = right;
+        maxLen = Math.Max(maxLen, right - left + 1);
+    }
+    return maxLen;
+}
 ```
 
 ### Minimum Window Substring

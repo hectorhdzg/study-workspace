@@ -1,0 +1,43 @@
+- [Home](/)
+
+- **Data Structures**
+  - [Arrays & Strings](data-structures/arrays-strings.md)
+  - [Linked Lists](data-structures/linked-lists.md)
+  - [Stacks & Queues](data-structures/stacks-queues.md)
+  - [Trees](data-structures/trees.md)
+  - [Heaps](data-structures/heaps.md)
+  - [Hash Tables](data-structures/hash-tables.md)
+  - [Graphs](data-structures/graphs.md)
+  - [Tries](data-structures/tries.md)
+
+- **Algorithms**
+  - [Sorting](algorithms/sorting.md)
+  - [Searching](algorithms/searching.md)
+  - [Dynamic Programming](algorithms/dynamic-programming.md)
+  - [Graph Algorithms](algorithms/graphs.md)
+  - [Recursion & Backtracking](algorithms/recursion-backtracking.md)
+  - [Sliding Window & Two Pointers](algorithms/sliding-window-two-pointers.md)
+  - [Bit Manipulation](algorithms/bit-manipulation.md)
+
+- **System Design**
+  - [Core Concepts](system-design/core-concepts.md)
+  - [Databases](system-design/databases.md)
+  - [Caching](system-design/caching.md)
+  - [Load Balancing](system-design/load-balancing.md)
+  - [Message Queues](system-design/message-queues.md)
+  - [Common Designs](system-design/common-designs.md)
+
+- **Generative AI**
+  - [Core Concepts](gen-ai/core-concepts.md)
+  - [Large Language Models](gen-ai/llms.md)
+  - [Prompt Engineering](gen-ai/prompt-engineering.md)
+  - [RAG](gen-ai/rag.md)
+  - [Vector Databases](gen-ai/vector-databases.md)
+  - [AI Agents & Tool Use](gen-ai/agents.md)
+  - [Evaluation & Safety](gen-ai/evaluation-safety.md)
+
+- **Interview Tips**
+  - [Problem-Solving Framework](interview-tips/problem-solving-framework.md)
+  - [Communication](interview-tips/communication.md)
+  - [Behavioral (STAR)](interview-tips/behavioral.md)
+  - [Study Plan](interview-tips/study-plan.md)

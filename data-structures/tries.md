@@ -69,6 +69,93 @@ trie.insert("app");
 console.log(trie.search("app"));     // true
 ```
 
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        node = self.root
+        for c in word:
+            if c not in node.children:
+                node.children[c] = TrieNode()
+            node = node.children[c]
+        node.is_end = True
+
+    def search(self, word):
+        node = self.root
+        for c in word:
+            if c not in node.children:
+                return False
+            node = node.children[c]
+        return node.is_end
+
+    def starts_with(self, prefix):
+        node = self.root
+        for c in prefix:
+            if c not in node.children:
+                return False
+            node = node.children[c]
+        return True
+
+trie = Trie()
+trie.insert("apple")
+print(trie.search("apple"))      # True
+print(trie.starts_with("app"))   # True
+```
+
+```csharp
+public class Trie
+{
+    private class TrieNode
+    {
+        public Dictionary<char, TrieNode> Children = new();
+        public bool IsEnd;
+    }
+
+    private readonly TrieNode _root = new();
+
+    public void Insert(string word)
+    {
+        var node = _root;
+        foreach (char c in word)
+        {
+            if (!node.Children.ContainsKey(c))
+                node.Children[c] = new TrieNode();
+            node = node.Children[c];
+        }
+        node.IsEnd = true;
+    }
+
+    public bool Search(string word)
+    {
+        var node = _root;
+        foreach (char c in word)
+        {
+            if (!node.Children.ContainsKey(c)) return false;
+            node = node.Children[c];
+        }
+        return node.IsEnd;
+    }
+
+    public bool StartsWith(string prefix)
+    {
+        var node = _root;
+        foreach (char c in prefix)
+        {
+            if (!node.Children.ContainsKey(c)) return false;
+            node = node.Children[c];
+        }
+        return true;
+    }
+}
+```
+
 ---
 
 ## Word Search with Trie

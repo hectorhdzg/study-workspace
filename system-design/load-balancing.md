@@ -129,6 +129,63 @@ class TokenBucket {
 }
 ```
 
+```python
+import time
+
+class TokenBucket:
+    def __init__(self, capacity, refill_rate):
+        self.capacity = capacity
+        self.tokens = capacity
+        self.refill_rate = refill_rate  # tokens per second
+        self.last_refill = time.time()
+
+    def consume(self, tokens=1):
+        self._refill()
+        if self.tokens >= tokens:
+            self.tokens -= tokens
+            return True   # allowed
+        return False      # rate limited
+
+    def _refill(self):
+        now = time.time()
+        elapsed = now - self.last_refill
+        self.tokens = min(self.capacity, self.tokens + elapsed * self.refill_rate)
+        self.last_refill = now
+```
+
+```csharp
+public class TokenBucket
+{
+    private readonly int _capacity;
+    private readonly double _refillRate;
+    private double _tokens;
+    private DateTime _lastRefill;
+
+    public TokenBucket(int capacity, double refillRate)
+    {
+        _capacity = capacity;
+        _refillRate = refillRate;
+        _tokens = capacity;
+        _lastRefill = DateTime.UtcNow;
+    }
+
+    public bool Consume(int tokens = 1)
+    {
+        Refill();
+        if (_tokens >= tokens) { _tokens -= tokens; return true; }
+        return false;
+    }
+
+    private void Refill()
+    {
+        var now = DateTime.UtcNow;
+        var elapsed = (now - _lastRefill).TotalSeconds;
+        _tokens = Math.Min(_capacity, _tokens + elapsed * _refillRate);
+        _lastRefill = now;
+    }
+}
+```
+
 ---
 
 ## DNS & Global Load Balancing
