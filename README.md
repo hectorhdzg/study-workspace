@@ -8,6 +8,7 @@ A workspace to study tech-related topics for programming interviews, covering al
 - [Data Structures](./data-structures/README.md) — Arrays, linked lists, trees, graphs, hash tables, and more
 - [System Design](./system-design/README.md) — Scalability, databases, caching, messaging, and real-world designs
 - [Generative AI](./gen-ai/README.md) — LLMs, RAG, prompt engineering, vector databases, agents, and safety
+- [Observability](./observability/README.md) — Logs, metrics, traces, OpenTelemetry, alerting, and incident response
 - [Interview Tips](./interview-tips/README.md) — Problem-solving strategies, communication, and preparation advice
 
 ## How to Use This Workspace

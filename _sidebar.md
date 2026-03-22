@@ -36,6 +36,14 @@
   - [AI Agents & Tool Use](gen-ai/agents.md)
   - [Evaluation & Safety](gen-ai/evaluation-safety.md)
 
+- **Observability**
+  - [Core Concepts](observability/core-concepts.md)
+  - [Distributed Tracing](observability/distributed-tracing.md)
+  - [Metrics & Monitoring](observability/metrics-monitoring.md)
+  - [Logging](observability/logging.md)
+  - [Alerting & Incidents](observability/alerting-incident-response.md)
+  - [OpenTelemetry](observability/opentelemetry.md)
+
 - **Interview Tips**
   - [Problem-Solving Framework](interview-tips/problem-solving-framework.md)
   - [Communication](interview-tips/communication.md)
