@@ -27,6 +27,14 @@
   - [Message Queues](system-design/message-queues.md)
   - [Common Designs](system-design/common-designs.md)
 
+- **Distributed Systems**
+  - [Consensus Algorithms](distributed-systems/consensus-algorithms.md)
+  - [Replication & Partitioning](distributed-systems/replication-partitioning.md)
+  - [Distributed Transactions](distributed-systems/distributed-transactions.md)
+  - [Clocks & Ordering](distributed-systems/clocks-ordering.md)
+  - [Failure Detection & Recovery](distributed-systems/failure-detection.md)
+  - [Service Discovery & Coordination](distributed-systems/service-discovery.md)
+
 - **Generative AI**
   - [Core Concepts](gen-ai/core-concepts.md)
   - [Large Language Models](gen-ai/llms.md)
