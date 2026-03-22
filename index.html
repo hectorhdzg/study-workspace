@@ -182,6 +182,52 @@
       background: #1e293b;
       border-color: #334155;
     }
+
+    /* ── Code language tabs ── */
+    .code-tabs {
+      margin: 1em 0;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #dfe3ea;
+    }
+    .code-tabs-nav {
+      display: flex;
+      background: #f0f3f8;
+      border-bottom: 1px solid #dfe3ea;
+      gap: 0;
+    }
+    .code-tabs-nav button {
+      padding: 6px 16px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: #6b7280;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .code-tabs-nav button:hover { color: #364153; background: #e8ecf3; }
+    .code-tabs-nav button.active {
+      color: #3f6ad8;
+      border-bottom-color: #3f6ad8;
+      background: #fff;
+    }
+    .code-tabs .code-tab-panel { display: none; }
+    .code-tabs .code-tab-panel.active { display: block; }
+    .code-tabs .code-tab-panel pre {
+      margin: 0 !important;
+      border-radius: 0 !important;
+      border: none !important;
+    }
+    /* Dark mode tabs */
+    html[data-theme='dark'] .code-tabs { border-color: #334155; }
+    html[data-theme='dark'] .code-tabs-nav { background: #1e293b; border-bottom-color: #334155; }
+    html[data-theme='dark'] .code-tabs-nav button { color: #64748b; }
+    html[data-theme='dark'] .code-tabs-nav button:hover { color: #94a3b8; background: #334155; }
+    html[data-theme='dark'] .code-tabs-nav button.active {
+      color: #60a5fa; border-bottom-color: #60a5fa; background: #0f172a;
+    }
   </style>
 </head>
 <body>
@@ -229,5 +275,76 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <!-- Auto-group consecutive code blocks into tabs -->
+  <script>
+    var langNames = {
+      javascript: 'JavaScript', js: 'JavaScript',
+      python: 'Python', py: 'Python',
+      csharp: 'C#', cs: 'C#',
+      typescript: 'TypeScript', ts: 'TypeScript',
+      sql: 'SQL', bash: 'Bash', sh: 'Bash',
+      json: 'JSON', yaml: 'YAML', yml: 'YAML',
+      html: 'HTML', css: 'CSS', xml: 'XML',
+      promql: 'PromQL', markdown: 'Markdown'
+    };
+    function codeTabs(hook) {
+      hook.doneEach(function () {
+        var pres = document.querySelectorAll('.markdown-section pre[data-lang]');
+        var groups = [], current = [];
+        pres.forEach(function (pre, i) {
+          current.push(pre);
+          var next = pre.nextElementSibling;
+          // keep grouping if next sibling is also a pre with data-lang
+          if (!next || next.tagName !== 'PRE' || !next.getAttribute('data-lang')) {
+            if (current.length > 1) groups.push(current.slice());
+            current = [];
+          }
+        });
+        groups.forEach(function (group, gi) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'code-tabs';
+          var nav = document.createElement('div');
+          nav.className = 'code-tabs-nav';
+          group[0].parentNode.insertBefore(wrapper, group[0]);
+          group.forEach(function (pre, ti) {
+            var lang = pre.getAttribute('data-lang') || '';
+            var label = langNames[lang.toLowerCase()] || lang;
+            var btn = document.createElement('button');
+            btn.textContent = label;
+            btn.setAttribute('data-tab', gi + '-' + ti);
+            if (ti === 0) btn.className = 'active';
+            btn.onclick = function () {
+              nav.querySelectorAll('button').forEach(function (b) { b.classList.remove('active'); });
+              wrapper.querySelectorAll('.code-tab-panel').forEach(function (p) { p.classList.remove('active'); });
+              btn.classList.add('active');
+              wrapper.querySelector('[data-panel="' + gi + '-' + ti + '"]').classList.add('active');
+              localStorage.setItem('preferred-lang', label);
+            };
+            nav.appendChild(btn);
+            var panel = document.createElement('div');
+            panel.className = 'code-tab-panel' + (ti === 0 ? ' active' : '');
+            panel.setAttribute('data-panel', gi + '-' + ti);
+            panel.appendChild(pre);
+            wrapper.appendChild(panel);
+          });
+          wrapper.insertBefore(nav, wrapper.firstChild);
+          // Restore preferred language
+          var pref = localStorage.getItem('preferred-lang');
+          if (pref) {
+            var match = nav.querySelector('button');
+            nav.querySelectorAll('button').forEach(function (b) {
+              if (b.textContent === pref) match = b;
+            });
+            if (match) match.click();
+          }
+        });
+      });
+    }
+    window.$docsify = window.$docsify || {};
+    window.$docsify.plugins = (window.$docsify.plugins || []).concat(codeTabs);
+  </script>
 </body>
 </html>
