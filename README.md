@@ -1,43 +1,25 @@
 # Study Workspace
 
-A workspace to study tech-related topics for programming interviews, covering algorithms, data structures, and system design.
+Your one-stop reference for programming interview preparation — algorithms, data structures, system design, generative AI, and observability — with code examples in JavaScript, Python, and C#.
 
-## Contents
+## Topics
 
-- [Algorithms](./algorithms/README.md) — Sorting, searching, dynamic programming, graphs, and more
-- [Data Structures](./data-structures/README.md) — Arrays, linked lists, trees, graphs, hash tables, and more
-- [System Design](./system-design/README.md) — Scalability, databases, caching, messaging, and real-world designs
-- [Generative AI](./gen-ai/README.md) — LLMs, RAG, prompt engineering, vector databases, agents, and safety
-- [Observability](./observability/README.md) — Logs, metrics, traces, OpenTelemetry, alerting, and incident response
-- [Interview Tips](./interview-tips/README.md) — Problem-solving strategies, communication, and preparation advice
+- [**Data Structures**](data-structures/README.md) — Arrays, linked lists, stacks, queues, trees, heaps, hash tables, graphs, tries
+- [**Algorithms**](algorithms/README.md) — Sorting, searching, dynamic programming, graph algorithms, backtracking, sliding window, bit manipulation
+- [**System Design**](system-design/README.md) — Scalability, databases, caching, load balancing, message queues, and real-world designs (URL shortener, chat system, AI chatbot)
+- [**Generative AI**](gen-ai/README.md) — LLMs, prompt engineering, RAG, vector databases, AI agents, evaluation and safety
+- [**Observability**](observability/README.md) — Logs, metrics, distributed tracing, OpenTelemetry, alerting, incident response
+- [**Interview Tips**](interview-tips/README.md) — Problem-solving framework, communication, behavioral questions, study plan
 
-## How to Use This Workspace
+## How to Use
 
-1. Pick a topic from the list above.
-2. Read the concept explanation and complexity analysis.
-3. Study the provided code examples (JavaScript/TypeScript).
-4. Practice the suggested problems.
+1. **Browse** — Pick a topic from the sidebar.
+2. **Learn** — Each page covers concepts, complexity analysis, and common patterns.
+3. **Switch languages** — Click the **JavaScript | Python | C#** tabs on any code block.
+4. **Search** — Use the search bar to find any topic or keyword.
+5. **Practice** — Follow the LeetCode links at the bottom of each page.
 
-## Viewing as a Website
-
-This workspace includes a [Docsify](https://docsify.js.org/) setup that renders all the markdown files as a clean, searchable website with sidebar navigation.
-
-### Preview Locally
-
-```bash
-npx docsify-cli serve .
-```
-
-Then open **http://localhost:3000** in your browser.
-
-### Deploy to GitHub Pages
-
-1. Push this repo to GitHub.
-2. Go to **Settings → Pages**.
-3. Set source to **Deploy from a branch** → **main** → **/ (root)**.
-4. Your site will be live at `https://<username>.github.io/study-workspace/`.
-
-> Use the 🌙 button in the bottom-right corner to toggle dark mode.
+> Toggle dark mode with the 🌙 button in the bottom-right corner.
 
 ## Big-O Complexity Quick Reference
 
