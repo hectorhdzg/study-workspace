@@ -131,6 +131,10 @@ console.log(searchRotated([4, 5, 6, 7, 0, 1, 2], 0)); // 4
 
 ## Linear Search
 
+The simplest search: check every element one by one until you find the target or exhaust the collection. No preconditions — works on unsorted, unindexed data. Use when the data is small, unsorted, or you only need to search once.
+
+**Time:** O(n) | **Space:** O(1)
+
 ```javascript
 function linearSearch(arr, target) {
   for (let i = 0; i < arr.length; i++) {

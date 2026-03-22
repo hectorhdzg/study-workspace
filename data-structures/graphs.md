@@ -2,6 +2,11 @@
 
 ## Representations
 
+Graphs can be stored in two main ways, each with trade-offs:
+
+- **Adjacency List** — Each node maps to a list of its neighbors. Space-efficient for sparse graphs (O(V + E)). Most interview problems use this.
+- **Adjacency Matrix** — A 2D array where `matrix[i][j] = 1` means an edge from i to j. O(1) edge lookup but O(V²) space. Best for dense graphs or when you need fast edge-existence checks.
+
 ### Adjacency List
 
 ```javascript
@@ -52,6 +57,12 @@ matrix[1][0] = 1; // for undirected
 ---
 
 ## Connected Components
+
+A **connected component** is a group of nodes where every node can reach every other node through some path. To count components, iterate through all nodes: for each unvisited node, run DFS/BFS to mark all reachable nodes as visited and increment the count. This naturally handles disconnected graphs.
+
+**Time:** O(V + E) | **Space:** O(V)
+
+**When to use:** Number of islands, friend groups, network clustering, any problem asking “how many separate groups exist.”
 
 ```javascript
 function countComponents(n, edges) {
@@ -136,6 +147,12 @@ public int CountComponents(int n, int[][] edges)
 ---
 
 ## Cycle Detection (Directed Graph)
+
+Detecting cycles in a directed graph uses a **three-state DFS**: each node is either unvisited (0), currently in the recursion stack (1), or fully processed (2). If DFS reaches a node that is still in the current recursion stack (state 1), that's a **back edge** — proof of a cycle.
+
+This is the foundation of problems like course scheduling (can you finish all courses if some depend on others?).
+
+**Time:** O(V + E) | **Space:** O(V)
 
 ```javascript
 function hasCycleDirected(numNodes, edges) {

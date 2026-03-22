@@ -34,6 +34,13 @@ class TreeNode {
 
 ## Tree Traversals
 
+Traversals define the order in which you visit every node. The naming refers to when you process the **root** relative to its subtrees:
+
+- **In-order** (Left → Root → Right) — Yields sorted output for BSTs. Use for retrieving elements in order.
+- **Pre-order** (Root → Left → Right) — Processes the root first. Use for serializing/cloning a tree.
+- **Post-order** (Left → Right → Root) — Processes children before the parent. Use for deleting a tree or computing subtree sizes.
+- **Level-order** (BFS) — Visits nodes level by level using a queue. Use for shortest-path in unweighted trees, or when you need to process one level at a time.
+
 ```javascript
 // In-order: Left → Root → Right (sorted for BST)
 function inOrder(root) {
@@ -131,6 +138,8 @@ public IList<IList<int>> LevelOrder(TreeNode root)
 
 ### Max Depth
 
+The depth (or height) of a tree is the length of the longest path from root to leaf. This is a classic recursive problem: the depth of a node is 1 + the maximum depth of its children. The base case is a null node, which has depth 0.
+
 ```javascript
 function maxDepth(root) {
   if (!root) return 0;
@@ -154,6 +163,8 @@ public int MaxDepth(TreeNode root)
 
 ### Check if Balanced
 
+A tree is **height-balanced** if for every node, the heights of its left and right subtrees differ by at most 1. A naive approach checks balance at each node separately (O(n²)). The optimized approach computes height bottom-up and returns -1 early if an imbalance is found, giving O(n) time.
+
 ```javascript
 function isBalanced(root) {
   function height(node) {
@@ -169,6 +180,8 @@ function isBalanced(root) {
 
 ### Lowest Common Ancestor (BST)
 
+In a BST, the LCA of two nodes is the first node you encounter (from the root) whose value falls **between** the two target values. If both targets are smaller, go left; if both are larger, go right; otherwise, you've found the LCA. The BST property makes this O(h) instead of O(n).
+
 ```javascript
 function lcaBST(root, p, q) {
   if (p.val < root.val && q.val < root.val) return lcaBST(root.left, p, q);
@@ -178,6 +191,8 @@ function lcaBST(root, p, q) {
 ```
 
 ### Lowest Common Ancestor (Binary Tree)
+
+For a general binary tree (not a BST), recursively search both subtrees. If the current node matches either target, return it. If both left and right subtrees return non-null, the current node is the LCA. Otherwise, propagate whichever side found a match.
 
 ```javascript
 function lca(root, p, q) {
@@ -190,6 +205,8 @@ function lca(root, p, q) {
 ```
 
 ### Validate BST
+
+A BST is valid if every node's value falls within the range defined by its ancestors. Pass down `min` and `max` bounds as you recurse: left children must be less than the parent, right children must be greater. A common mistake is only checking immediate parent-child relationships — you must enforce the range from all ancestors.
 
 ```javascript
 function isValidBST(root, min = -Infinity, max = Infinity) {
@@ -219,6 +236,8 @@ public bool IsValidBST(TreeNode root, long min = long.MinValue, long max = long.
 ```
 
 ### Path Sum
+
+Determine if any root-to-leaf path sums to a target value. Subtract the current node's value at each step; when you reach a leaf, check if the remaining target is zero. This is a natural DFS problem — explore one path, backtrack, try another.
 
 ```javascript
 function hasPathSum(root, targetSum) {

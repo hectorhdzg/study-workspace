@@ -18,6 +18,10 @@
 
 ### Prefix Sum
 
+A **prefix sum** (or cumulative sum) array stores the running total at each index. Once built in O(n), it answers any range-sum query in O(1) by subtracting two prefix values: `sum(l..r) = prefix[r+1] − prefix[l]`. This avoids recomputing the sum from scratch every time, which is a huge win when you have many queries over the same array.
+
+**When to use:** Subarray sum problems, range queries, counting subarrays that sum to a target (pair with a hash map).
+
 ```javascript
 // Build prefix sum array for O(1) range sum queries
 function buildPrefixSum(arr) {
@@ -38,6 +42,10 @@ console.log(rangeSum(prefix, 1, 3)); // 9 (2+3+4)
 ```
 
 ### Kadane's Algorithm (Maximum Subarray)
+
+Kadane's algorithm finds the contiguous subarray with the largest sum in O(n) time. The key insight: at each position, decide whether to **extend** the current subarray or **start fresh** from the current element. If the running sum drops below the current element, it's better to restart — any prefix that makes the sum smaller is a net negative.
+
+**When to use:** Maximum subarray sum, maximum product subarray, and variations where you track a running "best so far" vs "best ending here."
 
 ```javascript
 function maxSubarray(nums) {
@@ -85,6 +93,8 @@ public int MaxSubArray(int[] nums)
 
 ### String Reversal
 
+Reversing a string (or character array) is a fundamental two-pointer technique: swap elements from both ends moving inward until the pointers meet. In-place reversal runs in O(n) time and O(1) extra space. This pattern appears as a building block in many problems — reversing words in a sentence, checking palindromes, or rotating arrays.
+
 ```javascript
 function reverse(s) {
   return s.split('').reverse().join('');
@@ -101,6 +111,10 @@ function reverseInPlace(arr, left, right) {
 ```
 
 ### Anagram Check
+
+Two strings are **anagrams** if they contain the same characters in the same frequencies. The standard approach counts character occurrences in one string, then decrements for the other — if all counts reach zero, they match. This runs in O(n) time using a hash map (or fixed-size array for lowercase letters).
+
+**When to use:** Grouping anagrams, checking permutations, sliding-window substring problems where order doesn't matter.
 
 ```javascript
 function isAnagram(s, t) {

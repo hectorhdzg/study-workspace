@@ -22,6 +22,8 @@ class Stack {
 
 ### Valid Parentheses
 
+A stack naturally solves bracket matching: push opening brackets, and when you see a closing bracket, pop and check that it matches. If the stack is empty at the end, every bracket was matched. This works because brackets must close in reverse order of opening — exactly LIFO behavior.
+
 ```javascript
 function isValid(s) {
   const stack = [];
@@ -77,6 +79,12 @@ public bool IsValid(string s)
 
 ### Monotonic Stack (Next Greater Element)
 
+A **monotonic stack** maintains elements in sorted order (either increasing or decreasing). For the "next greater element" problem, maintain a stack of indices whose values haven't yet found a greater element. When a new value is larger than the stack's top, pop and record the answer — repeat until the stack's top is larger or empty.
+
+This converts an O(n²) brute-force search into O(n) because each element is pushed and popped at most once.
+
+**When to use:** Next greater/smaller element, daily temperatures, largest rectangle in histogram, stock span problems.
+
 ```javascript
 function nextGreaterElement(nums) {
   const result = new Array(nums.length).fill(-1);
@@ -97,6 +105,8 @@ console.log(nextGreaterElement([2, 1, 2, 4, 3])); // [4, 2, 4, -1, -1]
 ```
 
 ### Min Stack
+
+A **Min Stack** supports `push`, `pop`, `top`, and `getMin` — all in O(1). The trick: maintain a parallel stack that tracks the current minimum at each level. Every time you push, also push the new minimum (either the pushed value or the current min, whichever is smaller). When you pop, pop from both stacks.
 
 ```javascript
 class MinStack {
@@ -148,6 +158,10 @@ class Queue {
 ```
 
 ### Deque (Double-Ended Queue) — Sliding Window Maximum
+
+A **deque** (double-ended queue) supports O(1) insertion and removal at both ends. For the sliding window maximum problem, maintain a deque of indices where values are **decreasing** from front to back. The front always holds the index of the current window’s maximum. When the window slides, remove indices that fall outside and remove from the back any values smaller than the new element.
+
+**Time:** O(n) — each element enters and leaves the deque at most once.
 
 ```javascript
 function maxSlidingWindow(nums, k) {

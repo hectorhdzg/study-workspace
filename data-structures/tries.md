@@ -18,6 +18,10 @@ where `m` = length of the word.
 
 ## Implementation
 
+Each trie node has a map of children (one per possible character) and a boolean flag marking the end of a word. To **insert**, walk character by character, creating nodes as needed, and mark the final node as a word end. To **search**, walk the same path — if you reach the end and the flag is set, the word exists. **startsWith** is the same walk but doesn't require the end flag.
+
+Tries trade space for speed: they use more memory than a hash set, but enable prefix queries that hash sets can't do efficiently.
+
 ```javascript
 class TrieNode {
   constructor() {
@@ -159,6 +163,10 @@ public class Trie
 ---
 
 ## Word Search with Trie
+
+This combines a trie with **backtracking DFS** on a 2D grid. First, insert all target words into a trie. Then for each cell on the board, run DFS following the trie structure — the trie prunes the search by only exploring paths that match known word prefixes. Without the trie, you'd need a separate DFS for every word; with it, you search for all words simultaneously.
+
+**Time:** O(m · n · 4^L) where m×n is the board size and L is max word length | **Space:** O(total characters in word list)
 
 ```javascript
 // Find all words from a list that appear in a 2D board

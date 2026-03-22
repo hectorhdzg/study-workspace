@@ -13,6 +13,13 @@
 
 ## Common Tricks
 
+Bit manipulation lets you solve certain problems in O(1) space and with very fast constant factors. The core insight: bitwise operations work on individual bits in parallel, making them ideal for toggling, checking, and counting properties of binary representations.
+
+- **Check / Set / Clear / Toggle a bit** — Use masks with shifts. `1 << i` creates a mask with only bit `i` set.
+- **Power of 2 check** — A power of 2 has exactly one bit set. `n & (n-1)` clears the lowest set bit — if the result is 0, there was only one bit.
+- **Count set bits (Brian Kernighan)** — Repeatedly clear the lowest set bit with `n &= n-1` and count iterations. This runs in O(k) where k is the number of set bits, not the total bit width.
+- **XOR to find the unique element** — XOR is self-canceling: `a ^ a = 0` and `a ^ 0 = a`. XOR all elements together — duplicates cancel out, leaving the single unique value.
+
 ```javascript
 // Check if bit i is set
 function isBitSet(num, i) {

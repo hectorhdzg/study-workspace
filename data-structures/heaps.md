@@ -24,6 +24,8 @@ Heaps are stored as arrays: for node at index `i`:
 
 ## Min-Heap Implementation
 
+A heap is typically stored as a flat array. The parent-child relationship is maintained through index arithmetic rather than pointers. **Bubble up** restores the heap property after an insert (swap with parent until the parent is smaller). **Sift down** restores it after removing the root (move the last element to the root, then swap with the smallest child until settled).
+
 ```javascript
 class MinHeap {
   constructor() {
@@ -78,6 +80,10 @@ class MinHeap {
 
 ### K Largest Elements
 
+To find the K largest elements in a collection, maintain a **min-heap of size K**. As you scan the array, push each element onto the heap. When the heap exceeds K elements, pop the minimum — this discards the smallest of the K+1 elements, keeping only the K largest. After scanning, the heap contains exactly the K largest elements.
+
+**Time:** O(n log k) | **Space:** O(k) — much better than sorting the entire array when k ≪ n.
+
 ```javascript
 function kLargest(nums, k) {
   const heap = new MinHeap();
@@ -128,6 +134,10 @@ public int[] KLargest(int[] nums, int k)
 
 ### Merge K Sorted Lists
 
+When merging K sorted lists, a heap efficiently tracks which list has the smallest current element. Push the head of each list onto a min-heap, then repeatedly pop the smallest, append it to the result, and push that node’s successor. The heap always has at most K elements, so each operation is O(log k).
+
+**Time:** O(n log k) where n is total elements across all lists.
+
 ```javascript
 // Uses a min-heap to always pick the smallest current element
 function mergeKLists(lists) {
@@ -138,6 +148,10 @@ function mergeKLists(lists) {
 ```
 
 ### Find Median from Data Stream
+
+Maintain two heaps: a **max-heap** for the lower half and a **min-heap** for the upper half. Every new number goes to the lower half first, then the tops are rebalanced so the heaps differ in size by at most 1. The median is always at the top of one or both heaps — O(log n) insert, O(1) median lookup.
+
+This is a classic example of using two heaps to maintain a running statistic efficiently.
 
 ```javascript
 class MedianFinder {

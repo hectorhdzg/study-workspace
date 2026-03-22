@@ -21,6 +21,10 @@
 
 ## Implementation
 
+A linked list is built from individual **nodes**, each holding a value and a pointer to the next node. Unlike arrays, linked lists don't store elements contiguously in memory — each node can live anywhere on the heap. This makes insertion and deletion at known positions O(1) (no shifting), but random access O(n) since you must traverse from the head.
+
+A common helper pattern is building a list from an array for testing, and converting back for verification.
+
 ```javascript
 class ListNode {
   constructor(val, next = null) {
@@ -57,6 +61,10 @@ function listToArray(head) {
 ## Common Operations
 
 ### Reverse a Linked List
+
+Reversing a linked list is one of the most fundamental operations. Walk through the list, and at each node, redirect its `next` pointer to the previous node. You need three pointers: `prev` (starts as null), `curr` (starts at head), and a temporary `next` to avoid losing the rest of the list. After the loop, `prev` is the new head.
+
+**Time:** O(n) | **Space:** O(1)
 
 ```javascript
 function reverseList(head) {
@@ -97,6 +105,10 @@ public ListNode ReverseList(ListNode head)
 ```
 
 ### Detect Cycle (Floyd's Tortoise & Hare)
+
+Floyd's algorithm uses two pointers moving at different speeds: **slow** moves one step, **fast** moves two steps. If there's a cycle, the fast pointer will eventually lap the slow pointer and they'll meet inside the cycle. If fast reaches null, there's no cycle.
+
+This is O(n) time and O(1) space — much better than using a hash set to track visited nodes.
 
 ```javascript
 function hasCycle(head) {
@@ -139,6 +151,8 @@ public bool HasCycle(ListNode head)
 
 ### Find Middle Node
 
+Use the same slow/fast pointer technique: when the fast pointer reaches the end, the slow pointer is at the middle. This avoids needing to know the list length ahead of time.
+
 ```javascript
 function middleNode(head) {
   let slow = head, fast = head;
@@ -153,6 +167,10 @@ function middleNode(head) {
 ```
 
 ### Merge Two Sorted Lists
+
+Given two sorted linked lists, merge them into one sorted list by comparing the heads and always picking the smaller value. A **dummy node** simplifies the logic — it acts as a temporary head so you don't need special-case logic for the first element. When one list is exhausted, append the rest of the other.
+
+**Time:** O(n + m) | **Space:** O(1) (reuse existing nodes)
 
 ```javascript
 function mergeTwoLists(l1, l2) {
@@ -205,6 +223,8 @@ public ListNode MergeTwoLists(ListNode l1, ListNode l2)
 ```
 
 ### Remove Nth Node from End
+
+To remove the nth node from the end in a single pass, use a **gap technique**: advance a `fast` pointer n+1 steps ahead, then move both `fast` and `slow` together. When `fast` reaches null, `slow` is right before the target node. A dummy node handles the edge case of removing the head.
 
 ```javascript
 function removeNthFromEnd(head, n) {

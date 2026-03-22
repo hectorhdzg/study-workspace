@@ -44,6 +44,8 @@ set.size;             // 3
 
 ### Frequency Counter
 
+The **frequency counter** pattern uses a hash map to count occurrences of each element. This transforms problems from O(n²) brute force (comparing every pair) into O(n) by counting first, then querying. A clever extension is **bucket sort by frequency**: group elements into buckets indexed by their count, then read buckets from highest to lowest.
+
 ```javascript
 function topKFrequent(nums, k) {
   const freq = new Map();
@@ -65,6 +67,8 @@ console.log(topKFrequent([1, 1, 1, 2, 2, 3], 2)); // [1, 2]
 ```
 
 ### Two Sum (Hash Map)
+
+The classic hash map problem: for each element, compute the complement (`target - current`) and check if it's already in the map. If yes, you've found the pair. If no, store the current element for future lookups. This is O(n) time and O(n) space — a single pass through the array.
 
 ```javascript
 function twoSum(nums, target) {
@@ -109,6 +113,10 @@ public int[] TwoSum(int[] nums, int target)
 ```
 
 ### Group Anagrams
+
+To group anagrams together, you need a way to compute the **same key** for all anagrams of a word. The simplest approach: sort each word’s characters and use the sorted string as the map key. All anagrams produce the same sorted key, so they end up in the same bucket.
+
+**Time:** O(n · k log k) where k is the max word length | **Alternative:** Use a character count array as the key for O(n · k).
 
 ```javascript
 function groupAnagrams(strs) {
@@ -155,6 +163,10 @@ public IList<IList<string>> GroupAnagrams(string[] strs)
 ```
 
 ### LRU Cache
+
+An **LRU (Least Recently Used) cache** evicts the oldest unused entry when it reaches capacity. It needs two operations in O(1): lookup by key (hash map) and tracking recency order (doubly linked list, or in JavaScript, `Map` which preserves insertion order).
+
+On every `get` or `put`, the accessed entry moves to the "most recent" position. When the cache is full, the entry at the front (least recently used) is evicted.
 
 ```javascript
 class LRUCache {
