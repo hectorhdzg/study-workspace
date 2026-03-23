@@ -83,6 +83,22 @@
 
 ---
 
+## Extended Plan: Advanced Topics (Weeks 13–14)
+
+For those targeting senior roles or wanting deeper coverage:
+
+| Day | Theme | Topics |
+|-----|-------|--------|
+| **Monday** | Probabilistic Structures | Bloom Filters, HyperLogLog, Count-Min Sketch, Skip Lists |
+| **Tuesday** | Advanced Trees | AVL Trees, Red-Black Trees, B-Trees |
+| **Wednesday** | Range Query Structures | Segment Trees, Fenwick Trees + practice problems |
+| **Thursday** | Advanced Graphs Pt. 1 | Dijkstra, Bellman-Ford, Floyd-Warshall |
+| **Friday** | Advanced Graphs Pt. 2 | Topological Sort, Union-Find, MST (Kruskal/Prim) |
+| **Saturday** | Advanced Techniques | String Algorithms (KMP), Monotonic Stack, Intervals, Greedy |
+| **Sunday** | Mock + Systems | LRU/LFU Cache implementation, timed LeetCode Hard problems |
+
+---
+
 ## Resources
 
 ### Books
@@ -90,6 +106,7 @@
 - *Elements of Programming Interviews* — Aziz, Lee, Prakash
 - *Designing Data-Intensive Applications* — Martin Kleppmann *(system design)*
 - *System Design Interview* — Alex Xu
+- *Grokking Algorithms* — Aditya Bhargava *(visual, beginner-friendly)*
 
 ### Online Platforms
 - [LeetCode](https://leetcode.com) — Coding problems
@@ -99,5 +116,7 @@
 
 ### YouTube Channels
 - NeetCode — Algorithm explanations
+- William Fiset — Graph algorithms, data structures
+- Back to Back SWE — Time complexity, interval scheduling
 - TechDummies — System design
 - Gaurav Sen — System design

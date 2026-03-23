@@ -9,15 +9,22 @@
   - [Hash Tables](data-structures/hash-tables.md)
   - [Graphs](data-structures/graphs.md)
   - [Tries](data-structures/tries.md)
+  - [Advanced Trees](data-structures/advanced-trees.md)
+  - [Probabilistic Structures](data-structures/probabilistic.md)
 
 - **Algorithms**
+  - [Big-O Notation](algorithms/big-o-notation.md)
   - [Sorting](algorithms/sorting.md)
   - [Searching](algorithms/searching.md)
+  - [BFS & DFS](algorithms/bfs-dfs.md)
   - [Dynamic Programming](algorithms/dynamic-programming.md)
   - [Graph Algorithms](algorithms/graphs.md)
   - [Recursion & Backtracking](algorithms/recursion-backtracking.md)
   - [Sliding Window & Two Pointers](algorithms/sliding-window-two-pointers.md)
+  - [Greedy](algorithms/greedy.md)
   - [Bit Manipulation](algorithms/bit-manipulation.md)
+  - [Combinations & Permutations](algorithms/combinations-permutations.md)
+  - [Advanced Algorithms](algorithms/advanced-algorithms.md)
 
 - **System Design**
   - [Core Concepts](system-design/core-concepts.md)

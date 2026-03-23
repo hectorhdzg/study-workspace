@@ -4,8 +4,8 @@ Your one-stop reference for programming interview preparation — algorithms, da
 
 ## Topics
 
-- [**Data Structures**](data-structures/README.md) — Arrays, linked lists, stacks, queues, trees, heaps, hash tables, graphs, tries
-- [**Algorithms**](algorithms/README.md) — Sorting, searching, dynamic programming, graph algorithms, backtracking, sliding window, bit manipulation
+- [**Data Structures**](data-structures/README.md) — Arrays, linked lists, stacks, queues, trees, heaps, hash tables, graphs, tries, advanced trees, probabilistic structures
+- [**Algorithms**](algorithms/README.md) — Big-O, sorting, searching, BFS/DFS, dynamic programming, graph algorithms, backtracking, sliding window, greedy, bit manipulation, combinations/permutations, advanced algorithms
 - [**System Design**](system-design/README.md) — Scalability, databases, caching, load balancing, message queues, and real-world designs (URL shortener, chat system, AI chatbot)
 - [**Distributed Systems**](distributed-systems/README.md) — Consensus (Raft, Paxos), replication, distributed transactions, clocks, failure detection, service discovery
 - [**Generative AI**](gen-ai/README.md) — LLMs, prompt engineering, RAG, vector databases, AI agents, evaluation and safety

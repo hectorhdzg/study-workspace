@@ -10,6 +10,8 @@
 - [Hash Tables](./hash-tables.md)
 - [Graphs](./graphs.md)
 - [Tries](./tries.md)
+- [Advanced Trees](./advanced-trees.md) — AVL, Red-Black, Segment Trees, Fenwick Trees, B-Trees
+- [Probabilistic Structures](./probabilistic.md) — Bloom Filters, HyperLogLog, Count-Min Sketch, Skip Lists
 
 ## Choosing the Right Data Structure
 
