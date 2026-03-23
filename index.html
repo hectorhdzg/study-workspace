@@ -28,13 +28,48 @@
     .sidebar .sidebar-nav li a.active {
       color: #3f6ad8;
     }
-    .sidebar .sidebar-nav li > strong {
+    .sidebar .sidebar-nav li > strong,
+    .sidebar .sidebar-nav li > p > strong {
       text-transform: uppercase;
       font-size: 12px;
       letter-spacing: 0.5px;
       color: #8592a6;
       margin-top: 12px;
       display: inline-block;
+    }
+    /* ── Collapsible sidebar sections ── */
+    .sidebar .sidebar-nav > ul > li.has-children {
+      cursor: pointer;
+    }
+    .sidebar .sidebar-nav > ul > li.has-children > p,
+    .sidebar .sidebar-nav > ul > li.has-children > strong {
+      position: relative;
+      padding-left: 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .sidebar .sidebar-nav > ul > li.has-children > p::before,
+    .sidebar .sidebar-nav > ul > li.has-children > strong::before {
+      content: '\25B6';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 8px;
+      color: #8592a6;
+      transition: transform 0.2s ease;
+    }
+    .sidebar .sidebar-nav > ul > li.has-children.open > p::before,
+    .sidebar .sidebar-nav > ul > li.has-children.open > strong::before {
+      transform: translateY(-50%) rotate(90deg);
+    }
+    .sidebar .sidebar-nav > ul > li.has-children > ul {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .sidebar .sidebar-nav > ul > li.has-children.open > ul {
+      max-height: 1000px;
     }
     /* Content area */
     .markdown-section {
@@ -114,7 +149,12 @@
     html[data-theme='dark'] .sidebar .sidebar-nav li a.active {
       color: #60a5fa;
     }
-    html[data-theme='dark'] .sidebar .sidebar-nav li > strong {
+    html[data-theme='dark'] .sidebar .sidebar-nav li > strong,
+    html[data-theme='dark'] .sidebar .sidebar-nav li > p > strong {
+      color: #64748b;
+    }
+    html[data-theme='dark'] .sidebar .sidebar-nav > ul > li.has-children > p::before,
+    html[data-theme='dark'] .sidebar .sidebar-nav > ul > li.has-children > strong::before {
       color: #64748b;
     }
     html[data-theme='dark'] .markdown-section {
@@ -349,6 +389,36 @@
     }
     window.$docsify = window.$docsify || {};
     window.$docsify.plugins = (window.$docsify.plugins || []).concat(codeTabs);
+  </script>
+  <!-- Collapsible sidebar sections -->
+  <script>
+    function collapsibleSidebar(hook) {
+      hook.doneEach(function () {
+        var items = document.querySelectorAll('.sidebar-nav > ul > li');
+        items.forEach(function (li) {
+          var nested = li.querySelector('ul');
+          if (!nested) return;
+          li.classList.add('has-children');
+          // Check if this section contains the active link
+          var hasActive = !!nested.querySelector('li a.active');
+          if (hasActive) {
+            li.classList.add('open');
+          } else {
+            li.classList.remove('open');
+          }
+          // Find the clickable header (p > strong, or strong directly)
+          var header = li.querySelector(':scope > p') || li.querySelector(':scope > strong');
+          if (header && !header.hasAttribute('data-collapse-bound')) {
+            header.setAttribute('data-collapse-bound', '1');
+            header.addEventListener('click', function (e) {
+              e.stopPropagation();
+              li.classList.toggle('open');
+            });
+          }
+        });
+      });
+    }
+    window.$docsify.plugins = (window.$docsify.plugins || []).concat(collapsibleSidebar);
   </script>
 </body>
 </html>
