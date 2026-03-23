@@ -59,6 +59,11 @@
   - [Alerting & Incidents](observability/alerting-incident-response.md)
   - [OpenTelemetry](observability/opentelemetry.md)
 
+- **Programming Languages**
+  - [C# & .NET](languages/csharp-dotnet.md)
+  - [Python](languages/python.md)
+  - [JavaScript](languages/javascript.md)
+
 - **Interview Tips**
   - [Problem-Solving Framework](interview-tips/problem-solving-framework.md)
   - [Communication](interview-tips/communication.md)

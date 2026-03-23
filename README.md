@@ -10,6 +10,7 @@ Your one-stop reference for programming interview preparation — algorithms, da
 - [**Distributed Systems**](distributed-systems/README.md) — Consensus (Raft, Paxos), replication, distributed transactions, clocks, failure detection, service discovery
 - [**Generative AI**](gen-ai/README.md) — LLMs, prompt engineering, RAG, vector databases, AI agents, evaluation and safety
 - [**Observability**](observability/README.md) — Logs, metrics, distributed tracing, OpenTelemetry, alerting, incident response
+- [**Programming Languages**](languages/README.md) — C#/.NET, Python, JavaScript advanced features and interview topics
 - [**Interview Tips**](interview-tips/README.md) — Problem-solving framework, communication, behavioral questions, study plan
 
 ## How to Use
