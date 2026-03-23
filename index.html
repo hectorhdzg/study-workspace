@@ -393,26 +393,46 @@
   <!-- Collapsible sidebar sections -->
   <script>
     function collapsibleSidebar(hook) {
+      function getSavedState() {
+        try { return JSON.parse(localStorage.getItem('sidebar-open') || '{}'); } catch(e) { return {}; }
+      }
+      function saveState(state) {
+        localStorage.setItem('sidebar-open', JSON.stringify(state));
+      }
+      function getSectionKey(li) {
+        var strong = li.querySelector(':scope > p > strong') || li.querySelector(':scope > strong');
+        return strong ? strong.textContent.trim() : '';
+      }
+
       hook.doneEach(function () {
+        var saved = getSavedState();
         var items = document.querySelectorAll('.sidebar-nav > ul > li');
         items.forEach(function (li) {
           var nested = li.querySelector('ul');
           if (!nested) return;
           li.classList.add('has-children');
-          // Check if this section contains the active link
+          var key = getSectionKey(li);
           var hasActive = !!nested.querySelector('li a.active');
+
+          // Auto-open the active section; for others, restore saved state
           if (hasActive) {
+            li.classList.add('open');
+            if (key) { saved[key] = true; saveState(saved); }
+          } else if (key && saved[key]) {
             li.classList.add('open');
           } else {
             li.classList.remove('open');
           }
-          // Find the clickable header (p > strong, or strong directly)
+
           var header = li.querySelector(':scope > p') || li.querySelector(':scope > strong');
           if (header && !header.hasAttribute('data-collapse-bound')) {
             header.setAttribute('data-collapse-bound', '1');
             header.addEventListener('click', function (e) {
               e.stopPropagation();
               li.classList.toggle('open');
+              var isOpen = li.classList.contains('open');
+              var s = getSavedState();
+              if (key) { s[key] = isOpen; saveState(s); }
             });
           }
         });
